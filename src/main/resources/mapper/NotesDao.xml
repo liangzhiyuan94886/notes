@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.learn.notes.dao.NotesDao">
+    <select id="getALLNotes" resultType="com.learn.notes.entity.Notes">
+        select * from notes
+    </select>
+    <select id="updateDescribe" parameterType="com.learn.notes.entity.Notes">
+        UPDATE notes SET `describe` = #{describe} WHERE id = #{id}
+    </select>
+</mapper>
