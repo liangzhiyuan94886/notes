@@ -22,11 +22,12 @@
                 <div class="layui-input-block">
                     <input id="search" type="text" autocomplete="off" class="layui-input"  style="padding-right: 30px;">
                 </div>
+				<button id="addTag" class="layui-btn" style="float: right">新增标签</button>
+        <button id="addData" class="layui-btn" style="float: right;margin-right: 20px">新增</button>
             </div>
         </form>
 
-        <button id="addTag" class="layui-btn" style="float: right">新增标签</button>
-        <button id="addData" class="layui-btn" style="float: right;margin-right: 20px">新增</button>
+        
     </div>
     <div class="layui-row layui-col-space1">
         <div class="layui-col-md12">
