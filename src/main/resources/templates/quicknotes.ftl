@@ -12,22 +12,20 @@
 </head>
 <body>
 <div class="layui-container">
-    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 25px;">
-        <legend>产品类型</legend>
-    </fieldset>
-    <div>
-        <form class="layui-form" >
-            <div class="layui-inline">
+    <#--<fieldset class="layui-elem-field layui-field-title" style="margin-top: 25px;">-->
+        <#--<legend></legend>-->
+    <#--</fieldset>-->
+    <div style="margin-top: 25px;">
+        <#--<form class="layui-form">-->
+            <div class="layui-inline" style="float: left">
                 <label class="layui-form-label">Search</label>
                 <div class="layui-input-block">
-                    <input id="search" type="text" autocomplete="off" class="layui-input"  style="padding-right: 30px;">
+                    <input id="search" type="search" autocomplete="off" class="layui-input"  style="padding-right: 30px;">
                 </div>
-				<button id="addTag" class="layui-btn" style="float: right">新增标签</button>
-        <button id="addData" class="layui-btn" style="float: right;margin-right: 20px">新增</button>
             </div>
-        </form>
-
-        
+        <#--</form>-->
+        <button id="addTag" class="layui-btn" style="float: right">新增标签</button>
+        <button id="addData" class="layui-btn" style="float: right;margin-right: 20px">新增</button>
     </div>
     <div class="layui-row layui-col-space1">
         <div class="layui-col-md12">
@@ -87,7 +85,7 @@
 </div>
 </body>
 <script type="text/javascript" id="detail">
-    <i class="layui-icon layui-icon-share" style="font-size: 30px; color: #009688"></i>
+    <i class="layui-icon layui-icon-read" style="font-size: 30px; color: #009688"></i>
 </script>
 <script type="text/javascript">
     layui.use(['form', 'layedit', 'laydate','table'], function() {
@@ -110,7 +108,7 @@
                     {field: 'tagName', title: '标签' ,width: 100},
                     {field: 'keyword', title: '关键字' ,width: 220, edit: 'text'},
                     {field: 'content', title: '描述' ,width: 614, edit: 'text'},
-                    {field: '', title: '详情', width: 100, templet: '#detail'}
+                    {field: '', title: '详情', width: 100, templet: '#detail', align: 'center'}
                 ]],
                 page: true,
                 limit: 10,
@@ -159,7 +157,7 @@
                     field : field,
                     id : id
                 },
-                url : "/updateContent",
+                url : "/updateNote",
                 success : function (data) {
                     layer.msg("修改成功！");
                 }
@@ -244,7 +242,7 @@
                     {field: 'tagName', title: '标签' ,width: 100},
                     {field: 'keyword', title: '关键字' ,width: 220, edit: 'text'},
                     {field: 'content', title: '描述' ,width: 614, edit: 'text'},
-                    {field: '', title: '详情', width: 100, templet: '#detail'}
+                    {field: '', title: '详情', width: 100, templet: '#detail', align: 'center'}
                 ]],
                 page: true,
                 limit: 10,

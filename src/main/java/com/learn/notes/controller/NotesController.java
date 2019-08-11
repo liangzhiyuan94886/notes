@@ -62,9 +62,9 @@ public class NotesController {
      * @param field
      * @return
      */
-    @RequestMapping("/updateContent")
+    @RequestMapping("/updateNote")
     @ResponseBody
-    public Notes updateContent(String value, String id, String field) {
+    public Notes updateNote(String value, String id, String field) {
         Notes notes = new Notes();
         notes.setId(Integer.parseInt(id));
         if (field.equals("keyword")) {
@@ -119,12 +119,24 @@ public class NotesController {
         return tag;
     }
 
+    /**
+     * 模糊查询匹配
+     * @param search
+     * @param page
+     * @param limit
+     * @return
+     */
     @RequestMapping("/searchNotes")
     @ResponseBody
     public Map<String, Object> searchNotes(String search, Integer page, Integer limit) {
         Map<String, Object> result = new HashMap<>();
         PageHelper.startPage(page,limit);
-        List<Notes> searchInfo = notesDaoImpl.searchNotes(search);
+        List<Notes> searchInfo = null;
+        if (search.trim().length() == 0) {
+            searchInfo = notesDaoImpl.getALLNotes();
+        }else {
+            searchInfo = notesDaoImpl.searchNotes(search);
+        }
         PageInfo<Notes> pageInfo = new PageInfo(searchInfo);
         result.put("total", pageInfo.getTotal());
         result.put("data", pageInfo);

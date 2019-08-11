@@ -31,10 +31,12 @@
         INSERT INTO notes (nid,keyword,content) VALUES(#{nid},#{keyword},#{content})
     </select>
 
+    <!--新增标签-->
     <select id="addTag" parameterType="com.learn.notes.entity.Tag">
         INSERT INTO tag (tid,tagName) VALUES(#{tid},#{tagName})
     </select>
 
+    <!--模糊查询匹配-->
     <select id="searchNotes" resultType="com.learn.notes.entity.Notes">
         SELECT
             n.id,
