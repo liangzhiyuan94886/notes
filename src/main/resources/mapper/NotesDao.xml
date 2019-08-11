@@ -22,6 +22,10 @@
     <select id="updateContent" parameterType="com.learn.notes.entity.Notes">
         UPDATE notes SET content = #{content} WHERE id = #{id}
     </select>
+    <!--update关键词-->
+    <select id="updateKeyword" parameterType="com.learn.notes.entity.Notes">
+        UPDATE notes SET keyword = #{keyword} WHERE id = #{id}
+    </select>
     <!--新增-->
     <select id="addNote" parameterType="com.learn.notes.entity.Notes">
         INSERT INTO notes (nid,keyword,content) VALUES(#{nid},#{keyword},#{content})
@@ -29,5 +33,19 @@
 
     <select id="addTag" parameterType="com.learn.notes.entity.Tag">
         INSERT INTO tag (tid,tagName) VALUES(#{tid},#{tagName})
+    </select>
+
+    <select id="searchNotes" resultType="com.learn.notes.entity.Notes">
+        SELECT
+            n.id,
+            n.keyword,
+            n.content,
+            t.tagName
+        FROM
+            notes n,
+            tag t
+        WHERE
+            n.nid = t.tid
+            AND (content LIKE concat ('%',#{search},'%') OR keyword LIKE concat ('%',#{search},'%'))
     </select>
 </mapper>

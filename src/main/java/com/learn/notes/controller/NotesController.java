@@ -26,6 +26,10 @@ public class NotesController {
         return "quicknotes";
     }
 
+    /**
+     * 查询tag
+     * @return
+     */
     @RequestMapping("/getAllTags")
     @ResponseBody
     public List<Tag> getAllTags(){
@@ -33,6 +37,12 @@ public class NotesController {
         return getAllTag;
     }
 
+    /**
+     * 查询全部notes
+     * @param page
+     * @param limit
+     * @return
+     */
     @RequestMapping("/getALLNotes")
     @ResponseBody
     public Map<String, Object> getALLNotes(Integer page,Integer limit){
@@ -45,20 +55,35 @@ public class NotesController {
         return result;
     }
 
+    /**
+     * update关键词和描述内容
+     * @param value
+     * @param id
+     * @param field
+     * @return
+     */
     @RequestMapping("/updateContent")
     @ResponseBody
-    public Notes updateContent(String content, String id) {
+    public Notes updateContent(String value, String id, String field) {
         Notes notes = new Notes();
-        try {
-            notes.setContent(content);
-            notes.setId(Integer.parseInt(id));
+        notes.setId(Integer.parseInt(id));
+        if (field.equals("keyword")) {
+            notes.setKeyword(value);
+            notesDaoImpl.updateKeyword(notes);
+        }else {
+            notes.setContent(value);
             notesDaoImpl.updateContent(notes);
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
         }
         return notes;
     }
 
+    /**
+     * 新增笔记
+     * @param content
+     * @param keyword
+     * @param nid
+     * @return
+     */
     @RequestMapping("/addNote")
     @ResponseBody
     public Notes addNote(String content,String keyword,String nid) {
@@ -74,6 +99,11 @@ public class NotesController {
         return notes;
     }
 
+    /**
+     * 新增标签
+     * @param tagName
+     * @return
+     */
     @RequestMapping("/addTag")
     @ResponseBody
     public Tag addTag(String tagName) {
@@ -87,5 +117,17 @@ public class NotesController {
             e.printStackTrace();
         }
         return tag;
+    }
+
+    @RequestMapping("/searchNotes")
+    @ResponseBody
+    public Map<String, Object> searchNotes(String search, Integer page, Integer limit) {
+        Map<String, Object> result = new HashMap<>();
+        PageHelper.startPage(page,limit);
+        List<Notes> searchInfo = notesDaoImpl.searchNotes(search);
+        PageInfo<Notes> pageInfo = new PageInfo(searchInfo);
+        result.put("total", pageInfo.getTotal());
+        result.put("data", pageInfo);
+        return result;
     }
 }

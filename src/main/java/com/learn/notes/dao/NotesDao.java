@@ -12,8 +12,12 @@ public interface NotesDao {
 
     String updateContent(Notes notes);
 
+    String updateKeyword(Notes notes);
+
     String addNote(Notes notes);
 
     String addTag(Tag tag);
+
+    List<Notes> searchNotes(String search);
 
 }

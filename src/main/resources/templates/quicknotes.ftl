@@ -12,10 +12,19 @@
 </head>
 <body>
 <div class="layui-container">
-    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 25px;">
         <legend>产品类型</legend>
     </fieldset>
     <div>
+        <form class="layui-form" >
+            <div class="layui-inline">
+                <label class="layui-form-label">Search</label>
+                <div class="layui-input-block">
+                    <input id="search" type="text" autocomplete="off" class="layui-input"  style="padding-right: 30px;">
+                </div>
+            </div>
+        </form>
+
         <button id="addTag" class="layui-btn" style="float: right">新增标签</button>
         <button id="addData" class="layui-btn" style="float: right;margin-right: 20px">新增</button>
     </div>
@@ -98,8 +107,8 @@
                 cols: [[
                     {field: 'id', title: '序号', width: 100, fixed: 'left', unresize: true, sort: true},
                     {field: 'tagName', title: '标签' ,width: 100},
-                    {field: 'keyword', title: '关键字' ,width: 100},
-                    { field: 'content', title: '描述' ,width: 734, edit: 'text'},
+                    {field: 'keyword', title: '关键字' ,width: 220, edit: 'text'},
+                    {field: 'content', title: '描述' ,width: 614, edit: 'text'},
                     {field: '', title: '详情', width: 100, templet: '#detail'}
                 ]],
                 page: true,
@@ -137,16 +146,16 @@
 
         //监听单元格编辑
         table.on('edit(table1)', function(obj){
-            var content = obj.value, //得到修改后的值
-                // data = obj.data, //得到所在行所有键值
-                id = obj.data.id
-                // field = obj.field; //得到字段
-            // layer.msg(value);
+            var value = obj.value, //得到修改后的值
+                id = obj.data.id,
+                field = obj.field; //得到字段
+            // layer.msg(field+":"+value);
             $.ajax({
                 type : "post",
                 dataType : "json",
                 data : {
-                    content : content,
+                    value : value,
+                    field : field,
                     id : id
                 },
                 url : "/updateContent",
@@ -218,6 +227,40 @@
             getAllTags();
             return false;
         });
+
+
+        $("#search").blur(function(data){
+            var search = data.delegateTarget.value;
+            console.log(search);
+            table.render({
+                elem: '#table1',
+                url: '/searchNotes',
+                where: {search : search},
+                title: '',
+                totalRow: true,
+                cols: [[
+                    {field: 'id', title: '序号', width: 100, fixed: 'left', unresize: true, sort: true},
+                    {field: 'tagName', title: '标签' ,width: 100},
+                    {field: 'keyword', title: '关键字' ,width: 220, edit: 'text'},
+                    {field: 'content', title: '描述' ,width: 614, edit: 'text'},
+                    {field: '', title: '详情', width: 100, templet: '#detail'}
+                ]],
+                page: true,
+                limit: 10,
+                response: {
+                    statusCode: 200
+                },
+                parseData: function (res) {
+                    return {
+                        "code": 200, //解析接口状态
+                        "msg": '', //解析提示文本
+                        "count": res.total, //解析数据长度
+                        "data": res.data.list //解析数据列表
+                    };
+                },
+            });
+        });
+
 
 
     });

@@ -42,6 +42,16 @@ public class NotesDaoImpl implements NotesDao {
     }
 
     /**
+     * update关键词
+     * @param notes
+     * @return
+     */
+    @Override
+    public String updateKeyword(Notes notes) {
+        return notesDao.updateKeyword(notes);
+    }
+
+    /**
      * 新增信息
      * @param notes
      * @return
@@ -59,6 +69,16 @@ public class NotesDaoImpl implements NotesDao {
     @Override
     public String addTag(Tag tag) {
         return notesDao.addTag(tag);
+    }
+
+    /**
+     * 模糊查询notes
+     * @param search
+     * @return
+     */
+    @Override
+    public List<Notes> searchNotes(String search) {
+        return notesDao.searchNotes(search);
     }
 
 }
