@@ -23,7 +23,7 @@
 
 <div style="text-align: center">
     <#list pic as p>
-        <img src="/static/images/upload/${p.picName}" style="height: 200px;width: 325px">
+        <img src="/upload/${p.picName}" style="height: 200px;width: 325px">
     </#list>
 </div>
 </body>
